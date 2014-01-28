@@ -4,20 +4,92 @@
  */
 package SendMailApp;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author lu
  */
-public class SetSenderInfo extends javax.swing.JFrame {
+public class SetSenderInfoDialog extends javax.swing.JDialog {
 
-    
+    private MailSenderInfo mailInfotemp;
     /**
-     * Creates new form SetSenderInfo
+     * Creates new form SetSenderInfoDialog
      */
-    public SetSenderInfo() {
+    public SetSenderInfoDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
+    
+    public SetSenderInfoDialog(java.awt.Frame parent, boolean modal, MailSenderInfo mailInfo) {
+        super(parent, modal);
+        initComponents();
+        this.mailInfotemp = mailInfo;
+        SetSenderInfoToWindow(mailInfo);
+    }
 
+    private void SetSenderInfoToWindow(MailSenderInfo mailInfo)
+    {
+        if(mailInfo.getMailServerHost() != null)
+        {
+            this.jTextHost.setText(mailInfo.getMailServerHost());
+        }
+        if(mailInfo.getMailServerPort() != null)
+        {
+            this.jTextPort.setText(mailInfo.getMailServerPort());
+        }
+        if(mailInfo.getUserName() != null)
+        {
+            this.jTextUsername.setText(mailInfo.getUserName());
+        }
+        if(mailInfo.getPassWord() != null)
+        {
+            this.jTextPassword.setText(mailInfo.getPassWord());
+        }
+        if(mailInfo.isValidate())
+        {
+            this.jCheckBox1.setSelected(true);
+        }
+    }
+    
+    private void GetSenderInfoFromWindow()
+    {
+        mailInfotemp.setMailServerHost(this.jTextHost.getText());
+        mailInfotemp.setMailServerPort(this.jTextPort.getText());
+        mailInfotemp.setUserName(this.jTextUsername.getText());
+        mailInfotemp.setPassWord(this.jTextPassword.getText());
+        if(this.jCheckBox1.isSelected())
+        {
+            mailInfotemp.setValidate(true);
+        }
+        else
+        {
+            mailInfotemp.setValidate(false);
+        }
+    }
+    
+    private boolean checkValidation()
+    {
+        String rexstr = "^([\\w-]+\\.)+[\\w-]+(/[\\w-./?%&=]*)?$";
+        Pattern pat=Pattern.compile(rexstr);
+        Matcher mat = pat.matcher(this.jTextHost.getText());
+        if(!mat.matches())
+        {
+            JOptionPane.showMessageDialog(null, "Please input correct Host address!", "Notify", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        rexstr = "^[0-9]*$";
+        pat = Pattern.compile(rexstr);
+        mat = pat.matcher(this.jTextPort.getText());
+        if(!mat.matches())
+        {
+            JOptionPane.showMessageDialog(null, "Please input correct Host Port!", "Notify", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        return true;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,39 +99,51 @@ public class SetSenderInfo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jTextHost = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextPort = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jTextUsername = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jTextPassword = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jTextPort = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jTextUsername = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("Host");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setType(java.awt.Window.Type.POPUP);
 
         jTextHost.setText("检查网址格式");
         jTextHost.setToolTipText("");
 
-        jLabel2.setText("Port");
-
-        jTextPort.setText("检查数字");
-
-        jLabel3.setText("UserName");
+        jLabel1.setText("Host");
 
         jLabel4.setText("Password");
 
+        jLabel3.setText("UserName");
+
+        jTextPort.setText("检查数字");
+
+        jLabel2.setText("Port");
+
         jLabel5.setText("Validation");
 
-        jButton1.setText("确定");
-
         jButton2.setText("取消");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+
+        jButton1.setText("确定");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,7 +175,7 @@ public class SetSenderInfo extends javax.swing.JFrame {
                         .addGap(32, 32, 32)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,18 +197,37 @@ public class SetSenderInfo extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jTextPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jCheckBox1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox1)
+                    .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        if(!checkValidation())
+        {
+            return;
+        }
+        else
+        {
+            GetSenderInfoFromWindow();
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -143,26 +246,29 @@ public class SetSenderInfo extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SetSenderInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SetSenderInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SetSenderInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SetSenderInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SetSenderInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SetSenderInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SetSenderInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SetSenderInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SetSenderInfo().setVisible(true);
+                SetSenderInfoDialog dialog = new SetSenderInfoDialog(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
-        //初始化的时候加载信息
-        //返回的时候传递信息
-        //添加常用邮箱选项
-        //弹出frame2的时候frame1等待
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

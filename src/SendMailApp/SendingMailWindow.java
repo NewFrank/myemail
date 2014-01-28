@@ -4,12 +4,16 @@
  */
 package SendMailApp;
 
+import java.awt.Dialog;
+
 /**
  *
  * @author lu
  */
 public class SendingMailWindow extends javax.swing.JFrame {
 
+    private static MailSenderInfo mailInfo = new MailSenderInfo();
+    private static SetSenderInfoDialog ssid = new SetSenderInfoDialog(null,true,mailInfo);
     /**
      * Creates new form SendingMailWindow
      */
@@ -26,22 +30,43 @@ public class SendingMailWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Send Email");
+
+        jButton1.setText("Change Sender Info");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 567, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(107, 107, 107)
+                .addComponent(jButton1)
+                .addContainerGap(319, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 371, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(338, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        ssid.setVisible(true);
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -76,8 +101,28 @@ public class SendingMailWindow extends javax.swing.JFrame {
                 new SendingMailWindow().setVisible(true);
             }
         });
-        
+
+        ssid.setVisible(true);
+
+//        public static void main(String[] args){   
+//         //这个类主要是设置邮件   
+//      MailSenderInfo mailInfo = new MailSenderInfo();    
+//      mailInfo.setMailServerHost("smtp.163.com");    
+//      mailInfo.setMailServerPort("25");    
+//      mailInfo.setValidate(true);    
+//      mailInfo.setUserName("han2000lei@163.com");    
+//      mailInfo.setPassword("**********");//您的邮箱密码    
+//      mailInfo.setFromAddress("han2000lei@163.com");    
+//      mailInfo.setToAddress("han2000lei@163.com");    
+//      mailInfo.setSubject("设置邮箱标题 如http://www.guihua.org 中国桂花网");    
+//      mailInfo.setContent("设置邮箱内容 如http://www.guihua.org 中国桂花网 是中国最大桂花网站==");    
+//         //这个类主要来发送邮件   
+//      SimpleMailSender sms = new SimpleMailSender();   
+//          sms.sendTextMail(mailInfo);//发送文体格式    
+//          sms.sendHtmlMail(mailInfo);//发送html格式   
+//    }  
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
