@@ -47,11 +47,12 @@ public class MailSetter {
         catch(MessagingException ex)
         {
             ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
         return false;
     }
     
-    public static boolean sendHTMLMail(MailSenderInfo mailInfo)
+    public boolean sendHTMLMail(MailSenderInfo mailInfo)
     {
         MyAuthenticator authenticator = null;
         Properties pro = mailInfo.getProperties();

@@ -7,6 +7,7 @@ package SendMailApp;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.mail.*;
 
 /**
  *
@@ -116,7 +117,6 @@ public class SetSenderInfoDialog extends javax.swing.JDialog {
         setResizable(false);
         setType(java.awt.Window.Type.POPUP);
 
-        jTextHost.setText("检查网址格式");
         jTextHost.setToolTipText("");
 
         jLabel1.setText("Host");
@@ -124,8 +124,6 @@ public class SetSenderInfoDialog extends javax.swing.JDialog {
         jLabel4.setText("Password");
 
         jLabel3.setText("UserName");
-
-        jTextPort.setText("检查数字");
 
         jLabel2.setText("Port");
 

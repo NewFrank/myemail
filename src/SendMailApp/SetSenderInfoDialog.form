@@ -106,7 +106,6 @@
   <SubComponents>
     <Component class="javax.swing.JTextField" name="jTextHost">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x68c0;&#x67e5;&#x7f51;&#x5740;&#x683c;&#x5f0f;"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
     </Component>
@@ -128,9 +127,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextPort">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x68c0;&#x67e5;&#x6570;&#x5b57;"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
